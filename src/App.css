@@ -5,6 +5,9 @@
 
   background-color: #fcfcfc;
 }
+.main-app-wrapper .header-app-wrapper {
+  margin-top: 5%;
+}
 
 .main-app-wrapper .content-wrapper {
    flex: 1;
