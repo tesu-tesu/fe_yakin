@@ -18,6 +18,7 @@ const Donasi = (props) => {
   const [detail, setDetail] = useState()
   const [nohp, setNohp] = useState()
   const [email, setEmail] = useState()
+  const [nama, setNama] = useState()
   const [donasi, setDonasi] = useState(0)
   const history = useHistory();
 
@@ -28,31 +29,43 @@ const Donasi = (props) => {
 
   const SubmitSchema = Yup.object().shape(
     {
-      nama: Yup.string()
-        .required('Harus Diisi !'),
-      nohp: Yup.string()
-        .required('Harus Diisi !'),
-      email: Yup.string()
-        .required('Harus Diisi !'),
+      // nama: Yup.string()
+      //   .required('Harus Diisi !'),
+      // nohp: Yup.string()
+      //   .required('Harus Diisi !'),
+      // email: Yup.string()
+      //   .required('Harus Diisi !'),
     }
   )
 
   function handlePay(data) {
-    console.log("data : ", data)
     window.snap.pay(data, {
-      onSuccess: function(result){
+      onSuccess: function (result) {
         /* You may add your own implementation here */
         alert("payment success!"); console.log(result);
       },
-      onPending: function(result){
+      onPending: function (result) {
         /* You may add your own implementation here */
-        alert("wating your payment!"); console.log(result);
+        alert("wating your payment!"); 
+        const data = JSON.stringify(result)
+        Axios.post("http://192.168.1.4:8000/midtrans/post-form", {
+          nama : nama,
+          nohp : nohp,
+          email : email,
+          donasi : donasi,
+          data : result
+        })
+          .then((res) => {
+            console.log("respon", res.data)
+          })
+          .catch((res) => {
+          })
       },
-      onError: function(result){
+      onError: function (result) {
         /* You may add your own implementation here */
         alert("payment failed!"); console.log(result);
       },
-      onClose: function(){
+      onClose: function () {
         /* You may add your own implementation here */
         alert('you closed the popup without finishing the payment');
       }
@@ -61,7 +74,6 @@ const Donasi = (props) => {
 
   function changeNominal(data) {
     setDonasi(data);
-    console.log("donasi : ", data)
   }
 
   return (
@@ -84,18 +96,17 @@ const Donasi = (props) => {
           }}
           validationSchema={SubmitSchema}
           onSubmit={values => {
-            console.log("helo", donasi)
-            Axios.post("http://localhost:8000/midtrans/pay", {
-              nama: values.nama,
-              no_hp: values.nohp,
-              email: values.email,
+            Axios.post("http://192.168.1.4:8000/midtrans/pay", {
+              nama: nama,
+              no_hp: nohp,
+              email: email,
               donasi: donasi,
             })
               .then((res) => {
-                console.log(res.data.data)
                 handlePay(res.data.data)
               })
               .catch((res) => {
+                console.log("error : ", res.data)
               })
           }}
         >
@@ -158,21 +169,21 @@ const Donasi = (props) => {
                     <Typography variant="body2">
                       <Grid container spacing={2} className="p-4">
                         <Grid sx={{ width: '100%' }} className="px-2">
-                          <TextfieldWrapper type="text" name="nama" id="standard-basic" label="Nama" variant="Standard" />
+                          <TextfieldWrapper type="text" name="nama" id="standard-basic" label="Nama" variant="Standard" value={nama} onChange={e => setNama(e.target.value)} />
                         </Grid>
                       </Grid>
                     </Typography>
                     <Typography variant="body2">
                       <Grid container spacing={2} className="p-4">
                         <Grid sx={{ width: '100%' }} className="px-2">
-                          <TextfieldWrapper type="text" name="nohp" id="outlined-basic" fullWidth label="Nomer Telepon" variant="outlined" />
+                          <TextfieldWrapper type="text" name="nohp" id="outlined-basic" fullWidth label="Nomer Telepon" value={nohp} variant="outlined" onChange={e => setNohp(e.target.value)}/>
                         </Grid>
                       </Grid>
                     </Typography>
                     <Typography variant="body2">
                       <Grid container spacing={2} className="p-4">
                         <Grid sx={{ width: '100%' }} className="px-2">
-                          <TextfieldWrapper type="text" name="email" id="outlined-basic" fullWidth label="Email" variant="outlined" />
+                          <TextfieldWrapper type="text" name="email" id="outlined-basic" fullWidth label="Email" value={email} variant="outlined" onChange={e => setEmail(e.target.value)}/>
                         </Grid>
                       </Grid>
                     </Typography>

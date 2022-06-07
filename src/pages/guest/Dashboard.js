@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Axios.get('http://192.168.1.115:8001/program')
-    Axios.get('http://localhost:8000/program')
+    Axios.get('http://192.168.1.4:8000/program')
       .then(result => {
         console.log("data : ", result.data.data)
         setItem(result.data.data);
@@ -90,21 +90,21 @@ const Dashboard = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+                      image={"http://192.168.1.4:8000/program/image/" + datas.id_program}
                       alt="green iguana"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
-                        {datas.judul}
+                        {datas.nama}
                       </Typography>
                     </CardContent>
                     <CardActions>
                       <Grid container>
                         <Grid className='mx-2 mb-3' xs={12}>
                           <Box className='m-2' sx={{ flexGrow: 1, display: 'flex' }}>
-                            <Typography >Rp. {datas.donasi} ,- / Rp. {datas.maksdonasi} ,-</Typography>
+                            <Typography >Rp. {datas.donasi} ,- / Rp. {datas.max_donasi} ,-</Typography>
                           </Box>
-                          <BorderLinearProgress variant="determinate" value={datas.donasi / datas.maksdonasi * 100} />
+                          <BorderLinearProgress variant="determinate" value={datas.donasi / datas.max_donasi * 100} />
                         </Grid>
                         <Grid container className='m-2' xs={12}>
                           <Grid item xs={6}>
