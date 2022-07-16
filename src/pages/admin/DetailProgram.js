@@ -32,7 +32,7 @@ const DetailProgram = (props) => {
     const [img, setImg] = useState()
 
     const getImage = async () => {
-        const imageUrl = "http://localhost:8000/program/image/" + props.location.state ;
+        const imageUrl = "http://192.168.1.4:8000/program/image/6";
 
         const res = await fetch(imageUrl);
         const imageBlob = await res.blob();
@@ -42,7 +42,7 @@ const DetailProgram = (props) => {
 
     useEffect(() => {
         console.log("id : ", props.location.state)
-        Axios.get('http://localhost:8000/program/' + props.location.state)
+        Axios.get('http://192.168.1.4:8000/program/' + props.location.state)
             .then(result => {
                 setData(result.data.data)
                 setLoading(false)
@@ -76,7 +76,7 @@ const DetailProgram = (props) => {
                             <CardMedia
 
                                 component="img"
-                                image={"http://localhost:8000/program/image/" + props.location.state}
+                                image={"http://192.168.1.4:8000/program/image/" + props.location.state}
                                 alt="green iguana"
                             />
                         </Grid>
@@ -90,9 +90,9 @@ const DetailProgram = (props) => {
                                     Donasi Terkumpul
                                 </Typography>
                                 <Typography variant="h6" component="div" className='mb-1'>
-                                    Rp. 100 / Rp. 200
+                                    Rp. { data.current_donasi } / Rp. { data.max_donasi }
                                 </Typography>
-                                <BorderLinearProgress variant="determinate" className='mb-3' value={90 / 100 * 100} />
+                                <BorderLinearProgress variant="determinate" className='mb-3' value={( data.current_donasi/data.max_donasi ) * 100 } />
                                 <Typography sx={{ mb: 1.5 }} color="text.secondary" className=''>
                                     Deskripsi
                                 </Typography>

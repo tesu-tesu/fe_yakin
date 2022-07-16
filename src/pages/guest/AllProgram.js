@@ -1,36 +1,22 @@
-import { Box, Grid } from "@mui/material";
-import { useEffect, React, useState } from "react";
-import Card from "@mui/material/Card";
-import Container from "@mui/material/Container";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useHistory } from "react-router-dom";
 import Axios from "axios";
-import { Modals, Carousels } from "../../components/molecules";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-import style from "../../styles/AllStyle.module.css";
-import theme from "../../styles/styles";
+import {
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Grid,
+} from "@mui/material";
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
-  },
-}));
-
-const Dashboard = () => {
+const AllProgram = () => {
   const [item, setItem] = useState();
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
@@ -38,7 +24,9 @@ const Dashboard = () => {
   const [id_program, setId_program] = useState();
   const [judul, setJudul] = useState(0);
 
+  const history = useHistory();
   const [open, setOpen] = useState(false);
+
   const handleOpen = (datas) => {
     history.push({
       pathname: "/donasi",
@@ -48,14 +36,8 @@ const Dashboard = () => {
     setOpen(true);
   };
 
-  const handleClose = () => setOpen(false);
-
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
-  const history = useHistory();
-
   useEffect(() => {
+    console.log("halo");
     // Axios.get('http://192.168.1.115:8001/program')
     // Axios.get('http://localhost:3000/employees')
     Axios.get("http://192.168.1.71:8000/program")
@@ -69,43 +51,30 @@ const Dashboard = () => {
       });
   }, []);
 
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor:
+        theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
+    },
+  }));
+
   return (
     <div>
-      <Grid className={style.title} container>
-        <Grid item xs={12} sm={4}>
-          <Typography className={style.titletext}>Yaskin</Typography>
-          <Typography className={style.subtitletext}>
-            Yayasan Amal Kita Indonesia
-          </Typography>
-
-          <Typography variant="h4" className={style.donasi_title}>
-            Yuk Donasi
-            <img className={style.donasi_icon} src={require("../../images/down-arrow.png")} />
-          </Typography>
-        </Grid>
-        <Grid item sm={1} className="ml-4" />
-        <Grid item xs={12} sm={7} className="">
-          <img
-            style={{ maxWidth: "100%" }}
-            src={require("../../images/dashboard_img.jpg")}
-          />
-        </Grid>
-      </Grid>
-
       <Grid
-        container
-        spacing={2}
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
       >
         {loading ? (
           <div>loading.......</div>
         ) : (
           <div>
-            <Grid container spacing={2} justify="left">
+            <Grid className={ 'mt-5' } container spacing={2} justify="left">
               {item.map((datas, index) => (
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={3}>
                   <Card sx={{ maxWidth: 345 }}>
                     <CardMedia
                       component="img"
@@ -165,4 +134,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AllProgram;

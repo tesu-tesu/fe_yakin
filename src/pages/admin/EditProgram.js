@@ -123,7 +123,7 @@ const EditProgram = (props) => {
 
     useEffect(() => {
         console.log("id : ", props)
-        Axios.get('http://localhost:8000/program/' + props.location.state)
+        Axios.get('http://192.168.1.4:8000/program/' + props.location.state)
             .then(result => {
                 console.log("result : ", result.data.data)
                 setNama(result.data.data.nama)
@@ -163,7 +163,7 @@ const EditProgram = (props) => {
                             </Typography>
                             <CardMedia
                                 component="img"
-                                image={"http://localhost:8000/program/image/" + props.location.state}
+                                image={"http://192.168.1.4:8000/program/image/" + props.location.state}
                                 alt="green iguana"
                             />
                             {selectedImage && (

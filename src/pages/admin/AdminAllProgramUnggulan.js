@@ -11,7 +11,7 @@ import { Grid } from '@mui/material'
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
 
-const AllProgramUnggulan = () => {
+const AdminAllProgramUnggulan = () => {
     const [item, setItem] = useState();
     const [loading, setLoading] = useState(true);
     const arrayTemp = []
@@ -93,9 +93,9 @@ const AllProgramUnggulan = () => {
     ];
 
     useEffect(() => {
-        Axios.get('http://localhost:8000/program')
+        Axios.get('http://192.168.1.4:8000/program/unggulan/')
             .then(result => {
-                result.data.data.map((item, index = 0) => (
+                result.data.map((item, index = 0) => (
                     temp = {
                         "id": index + 1,
                         "nama": item.nama,
@@ -160,4 +160,4 @@ const AllProgramUnggulan = () => {
     )
 }
 
-export default AllProgramUnggulan
+export default AdminAllProgramUnggulan

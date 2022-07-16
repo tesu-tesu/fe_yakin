@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, ThemeProvider, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -27,7 +27,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import InfoIcon from '@mui/icons-material/Info';
 import Button from '@mui/material/Button';
-
+// import  from '../styles/styles'
+import theme from '../styles/styles';
 
 const drawerWidth = 240;
 
@@ -112,7 +113,6 @@ const Icon = props => {
 
 
 export default function MiniDrawer() {
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menu = [
@@ -157,113 +157,117 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6"  sx={{ flexGrow: 1 }} noWrap component="div">
-            YAKIN
-          </Typography><Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ flexGrow:1 }}>
 
-            <Box sx={{ m: 2 }}>
-              <Button sx={{ color:'white' }}>
-                Program
-              </Button>
-            </Box>
-            <Box sx={{ m: 2 }}>
-              <Button sx={{ color:'white' }}>
-                Program Unggulan
-              </Button>
-            </Box>
-            <Box sx={{ m: 2 }}>
-              <Button sx={{ color:'white' }}>
-                Artikel
-              </Button>
-            </Box>
-            <Box sx={{ m: 2 }}>
-              <Button sx={{ color:'white' }}>
-                Donasi
-              </Button>
-            </Box>
-            <Box sx={{ m: 2 }}>
-              <Button sx={{ color:'white' }}>
-                Tentang Kami
-              </Button>
-            </Box>
-
-          </Box>
-          
-          <div>
+          <AppBar>
+            <Toolbar sx={{ 'background-color': 'secondary', 'height':'10vh' }}>
               <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
                 color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: '36px',
+                  ...(open && { display: 'none' }),
+                }}
               >
-                <AccountCircle />
+                <MenuIcon />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <div>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                </div> :
-                <div>
-                  <MenuItem onClick={() => history.push('/')}>Login</MenuItem>
+              <Typography color='secondary' variant="h6"  sx={{ flexGrow: 1 }} noWrap component="div">
+                YAKINsss
+              </Typography><Box sx={{ flexGrow: 1 }} />
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
+                <Box sx={{ m: 2 }}>
+                  <Button sx={{ color:'white' }}>
+                    Program
+                  </Button>
+                </Box>
+                <Box sx={{ m: 2 }}>
+                  <Button sx={{ color:'white' }}>
+                    Program Unggulan
+                  </Button>
+                </Box>
+                <Box sx={{ m: 2 }}>
+                  <Button sx={{ color:'white' }}>
+                    Artikel
+                  </Button>
+                </Box>
+                <Box sx={{ m: 2 }}>
+                  <Button sx={{ color:'white' }}>
+                    Donasi
+                  </Button>
+                </Box>
+                <Box sx={{ m: 2 }}>
+                  <Button sx={{ color:'white' }}>
+                    Tentang Kami
+                  </Button>
+                </Box>
+
+              </Box>
+              
+              <div>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <div>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                    </div> :
+                    <div>
+                      <MenuItem onClick={() => history.push('/')}>Login</MenuItem>
+                    </div>
+                  </Menu>
                 </div>
-              </Menu>
-            </div>
-        </Toolbar>
-      </AppBar>
-      <div>
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            {menu.map((item, index) => (
-              <ListItem button key={item.label} onClick={() => history.push(item.path)}>
-                <ListItemIcon>
-                  <Icon iconName={item.icon}/>
-                </ListItemIcon>
-                <ListItemText primary={item.label} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        
-      </div>
-    </Box>
+            </Toolbar>
+          </AppBar>
+          <div>
+            <Drawer variant="permanent" open={open}>
+              <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                </IconButton>
+              </DrawerHeader>
+              <Divider />
+              <List>
+                {menu.map((item, index) => (
+                  <ListItem button key={item.label} onClick={() => history.push(item.path)}>
+                    <ListItemIcon>
+                      <Icon iconName={item.icon}/>
+                    </ListItemIcon>
+                    <ListItemText primary={item.label} />
+                  </ListItem>
+                ))}
+              </List>
+            </Drawer>
+            
+          </div>
+        </Box>
+
+      </ThemeProvider>
+
   );
 }

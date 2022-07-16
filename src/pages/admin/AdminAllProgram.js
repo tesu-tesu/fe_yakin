@@ -11,7 +11,7 @@ import { Grid } from '@mui/material'
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
 
-const AllProgram = () => {
+const AdminAllProgram = () => {
   const [item, setItem] = useState();
   const [loading, setLoading] = useState(true);
   const arrayTemp = []
@@ -22,13 +22,11 @@ const AllProgram = () => {
   const [desc, setDesc] = useState()
 
   const handleDeleteClick = (id) => (event) => {
-    Axios.delete("http://localhost:8000/program/" + id)
+    console.log("delete : ", id)
+    Axios.delete("http://192.168.1.4:8000/program/" + id)
       .then(
-        Swal.fire(
-          'Hapus Data ?',
-          'Apakah anda yakin menghapus data ini ?',
-          'warning'
-        )
+        setLoading(true),
+        getData()
       )
       .catch(err => {
         console.log('error : ', err)
@@ -55,7 +53,7 @@ const AllProgram = () => {
     { field: 'id_index', headerName: '#', width: 70 },
     { field: 'nama', headerName: <Typography sx={{ fontWeight: 'bold' }}>Nama</Typography>, width: 250 },
     {
-      field: 'jmlh_donasi',
+      field: 'progres',
       headerName: <Typography sx={{ fontWeight: 'bold' }}>Progres</Typography>,
       flex: 1,
       width: 200
@@ -91,17 +89,18 @@ const AllProgram = () => {
       },
     }
   ];
-console.log("data : ", item)
-  useEffect(() => {
+
+  const getData = () => (
+    console.log("loop - "),
     // Axios.get('http://192.168.1.115:8001/program')
-    Axios.get('http://localhost:8000/program')
+    Axios.get('http://192.168.1.4:8000/program')
       .then(result => {
         result.data.data.map((item, index = 0) => (
           temp = {
             "id_index": index + 1,
             "id": item.id_program,
             "nama": item.nama,
-            "jmlh_donasi": item.jmlh_donasi
+            "progres": (item.current_donasi / item.max_donasi) * 100 + " % ( " + item.current_donasi + " / " + item.max_donasi + " )"
           },
           arrayTemp.push(temp)
         ))
@@ -111,6 +110,11 @@ console.log("data : ", item)
       .catch(err => {
         console.log('error : ', err)
       })
+  )
+
+  console.log("data : ", item)
+  useEffect(() => {
+    getData()
   }, [])
 
   return (
@@ -142,7 +146,7 @@ console.log("data : ", item)
 
           </Grid>
 
-          <hr/>
+          <hr />
 
           {loading ? <div>loading.......</div> :
 
@@ -162,4 +166,4 @@ console.log("data : ", item)
   )
 }
 
-export default AllProgram
+export default AdminAllProgram

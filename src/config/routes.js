@@ -2,16 +2,18 @@ import Dashboard from "../pages/guest/Dashboard";
 import Donasi from "../pages/guest/Donasi";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
-import AllProgram from "../pages/admin/AllProgram";
+import AdminAllProgram from "../pages/admin/AdminAllProgram";
 import ProfileAdmin from "../pages/admin/ProfileAdmin";
 import CreateProgram from "../pages/admin/CreateProgram"
 import EditProgram from "../pages/admin/EditProgram"
 import DetailProgram from "../pages/admin/DetailProgram"
-import AllProgramUnggulan from "../pages/admin/AllProgramUnggulan"
+import AdminAllProgramUnggulan from "../pages/admin/AdminAllProgramUnggulan"
 import CreateProgramUnggulan from "../pages/admin/CreateProgramUnggulan"
 import UpdateProgramUnggulan from "../pages/admin/UpdateProgramUnggulan"
 import DetailProgramUnggulan from "../pages/admin/DetailProgramUnggulan"
-
+import AllProgram from "../pages/guest/AllProgram";
+import AllProgramUnggulan from "../pages/guest/AllProgramUnggulan";
+import TentangKami from "../pages/guest/TentangKami";
 
 export const APP_ROUTE = [
     {
@@ -46,20 +48,44 @@ export const APP_ROUTE = [
         restricted: true,
         private: false,
     },
+    {
+        name: "All Program",
+        path: "/all_program",
+        component: AllProgram,
+        exact: true,
+        restricted: true,
+        private: false,
+    },
+    {
+        name: "All Program Unggulan",
+        path: "/all_program_unggulan",
+        component: AllProgramUnggulan,
+        exact: true,
+        restricted: true,
+        private: false,
+    },
+    {
+        name: "Tentang Kami",
+        path: "/tentang_kami",
+        component: TentangKami,
+        exact: true,
+        restricted: true,
+        private: false,
+    },
 ]
 
 export const PRIVATE_ROUTE = [
     {
         name: "All Program",
-        path: "/all_program",
-        component: AllProgram,
+        path: "/admin/all_program",
+        component: AdminAllProgram,
         exact: true,
         restricted: false,
         private: true,
     },   
     {
         name: "Profile Admin",
-        path: "/admin_profile",
+        path: "/admin/admin_profile",
         component: ProfileAdmin,
         exact: true,
         restricted: false,
@@ -67,7 +93,7 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "Program",
-        path: "/program",
+        path: "/admin/program",
         component: CreateProgram,
         exact: true,
         restricted: false,
@@ -75,7 +101,7 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "Create Program",
-        path: "/create_program",
+        path: "/admin/create_program",
         component: CreateProgram,
         exact: true,
         restricted: false,
@@ -83,7 +109,7 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "Edit Program",
-        path: "/edit_program",
+        path: "/admin/edit_program",
         component: EditProgram,
         exact: true,
         restricted: false,
@@ -91,7 +117,7 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "Detail Program",
-        path: "/detail_program",
+        path: "/admin/detail_program",
         component: DetailProgram,
         exact: true,
         restricted: false,
@@ -99,15 +125,15 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "All Program Unggulan",
-        path: "/all_program_unggulan",
-        component: AllProgramUnggulan,
+        path: "/admin/all_program_unggulan",
+        component: AdminAllProgramUnggulan,
         exact: true,
         restricted: false,
         private: true,
     },   
     {
         name: "Create Program Unggulan",
-        path: "/create_program_unggulan",
+        path: "/admin/create_program_unggulan",
         component: CreateProgramUnggulan,
         exact: true,
         restricted: false,
@@ -115,7 +141,7 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "Edit Program Unggulan",
-        path: "/edit_program_unggulan",
+        path: "/admin/edit_program_unggulan",
         component: UpdateProgramUnggulan,
         exact: true,
         restricted: false,
@@ -123,7 +149,7 @@ export const PRIVATE_ROUTE = [
     },   
     {
         name: "Detail Program Unggulan",
-        path: "/detail_program_unggulan",
+        path: "/admin/detail_program_unggulan",
         component: DetailProgramUnggulan,
         exact: true,
         restricted: false,
